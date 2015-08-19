@@ -21,7 +21,6 @@
     <link rel="icon" href="/favicon.png">
   
   <link rel="stylesheet" href="/css/style.css" type="text/css">
-  <script src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
 </head>
 <body>
   <div id="container">
@@ -30,7 +29,9 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img lazy-src="" class="js-avatar">
+			
+			<img lazy-src="null" class="js-avatar">
+			
 		</a>
 
 		<hgroup>
@@ -53,17 +54,11 @@
 				        
 							<li><a href="/archives">所有文章</a></li>
 				        
-							<li><a href="/about">关于</a></li>
-				        
 						</ul>
 					</nav>
 					<nav class="header-nav">
 						<div class="social">
 							
-								<a class="github" target="_blank" href="/#" title="github">github</a>
-					        
-								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
-					        
 						</div>
 					</nav>
 				</section>
@@ -71,12 +66,30 @@
 				
 				
 				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
 
 				
 				
-				<section class="switch-part switch-part3">
+				<section class="switch-part switch-part4">
 				
-					<div id="js-aboutme">欲求不满，有欲则刚！</div>
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
 				</section>
 				
 			</div>
@@ -93,7 +106,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img lazy-src="" class="js-avatar">
+				<img lazy-src="null" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author">YangHui</h1>
@@ -108,18 +121,12 @@
 		        
 					<li><a href="/archives">所有文章</a></li>
 		        
-					<li><a href="/about">关于</a></li>
-		        
 		        <div class="clearfix"></div>
 				</ul>
 			</nav>
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="/#" title="github">github</a>
-			        
-						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
-			        
 				</div>
 			</nav>
 		</header>				
@@ -153,45 +160,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-
-		  
-			<div id="toc" class="toc-article">
-			  <strong class="toc-title">目录</strong>
-			  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-环境"><span class="toc-number">1.</span> <span class="toc-text">1.环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Xcode创建工程"><span class="toc-number">2.</span> <span class="toc-text">2.Xcode创建工程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-删除多余项目"><span class="toc-number">3.</span> <span class="toc-text">3.删除多余项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-添加文件"><span class="toc-number">4.</span> <span class="toc-text">4.添加文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1_添加源文件"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 添加源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2_添加SDL2库文件"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 添加SDL2库文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3_添加测试代码"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 添加测试代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-_可能出现的问题"><span class="toc-number">5.</span> <span class="toc-text">5. 可能出现的问题</span></a></li></ol>
-			</div>
-		
-
         <h1 id="1-环境">1.环境</h1><p>操作系统：Mac OS X Yosemite</p>
 <p>开发工具：Xcode6</p>
 <p>SDL库版本：2.x</p>
 <h1 id="2-Xcode创建工程">2.Xcode创建工程</h1><p>打开XCode创建一个Cocoa Application工程。如图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_new_project.png" alt="创建工程"></p>
-<p>下一步到了工程配置的界面，根据你的需要填写工程的名称等信息。我这里就叫做SDLTest。配置如下如所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_project_config.png" alt="工程配置"></p>
-<p>下面的步骤使用默认的即可，直达工程创建完成。</p>
-<h1 id="3-删除多余项目">3.删除多余项目</h1><p>由于我们并不需要Xcode给我们创建的多余的文件。首先，删除多余的源文件和支持文件。如下图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_delete_source.png" alt="删除多余源文件"></p>
-<p>弹出确认框，选择Move To Trash。彻底删除。这个时候还需要删除测试项目的Targets。打开Targets侧边栏，选中SDLTestTests（名称为你项目名字后面加上Tests，我的项目叫做SDLTest，所以名称为SDLTestTests）删除。如下图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_delete_test_target.png" alt="删除测试工程"></p>
-<p>最后只剩下Info.plist文件，Targets只有SDLTest。</p>
-<h1 id="4-添加文件">4.添加文件</h1><p>添加工程需要的源文件和库文件。</p>
-<h2 id="4-1_添加源文件">4.1 添加源文件</h2><p>删除到其他的东西之后，是时候添加源文件了。添加一个名字为main.cpp的源文件。添加过程如图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_add_source.png" alt="添加源文件"></p>
-<h2 id="4-2_添加SDL2库文件">4.2 添加SDL2库文件</h2><p>点击工程文件，打开Targets侧边栏，选择Targets下面的SDLTest Target，在选择Build Phases选项卡，展开Link Binary With Libraries选项。如下图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_add_lib1.png" alt="添加库文件"></p>
-<p>然后选择SDL2的库文件即可。其实，还有一种更为简单的方法就是，直接把库文件拖到工程中，会出现一个添加文件的配置选项框。如图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_drag_lib.png" alt="添加库文件"></p>
-<p>点击Finish，完成添加。</p>
-<h2 id="4-3_添加测试代码">4.3 添加测试代码</h2><p>打开main.cpp文件添加如下的测试代码。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#60;SDL2/SDL.h&#62;&#10;int main(int argc, const char** argv)&#10;&#123;&#10;    if(SDL_Init(SDL_INIT_EVERYTHING) != 0)&#10;    &#123;&#10;        puts(&#34;SDL_Init error&#34;);&#10;        return -1;&#10;    &#125;&#10;    else&#10;    &#123;&#10;        puts(&#34;SDL_Init success!&#34;);&#10;        return 0;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>直接编译运行。不出意外会输出<strong>SDL_Init success!</strong>. </p>
-<h1 id="5-_可能出现的问题">5. 可能出现的问题</h1><p>在最后可能出现dylib出现SDL动态库的Image没有找到。那么选择Build Phases选项卡，点击最上面的<strong>+</strong>号，选择<strong>New Copy Files Phases</strong>，添加一个<strong>Copy Files</strong>的分类，再把<strong>Destination</strong>改为<strong>Framesworks</strong>，再使用添加库文件的方式，添加SDL库，如图所示：</p>
-<p><img src="/images/sdl2_on_mac/sdltest_copy_files.png" alt="添加Copy Files"></p>
-
       
     </div>
     
     <div class="article-info article-info-index">
+      
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SDL2/">SDL2</a></li></ul>
@@ -203,6 +181,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/08/19/sdl2_on_mac/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -244,16 +226,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-
-		  
-
         <p>一直以来使用Vimwiki来写博客，所有写的文章也都是离线的，没有将他们放到互联网上。自己一直想创建一个自己的技术博客，在去年的10月份左右，购买了域名和空间，游戏公司的下半年基本忙的不可开交，加之网站空间又需要备案，手续比较麻烦，这件事情就被搁置了下来。我本来对web前端的东西也不是太懂，在使用Vimwiki写博客也是那种极其简单的，除了图片就是文字，太过于简陋了，毫无美感，这也是迟迟没有放上互联网的一个原因。直到有天同事说有一个Hexo的静态博客的框架非常好用。试了一下，果然好用。萌生了好好整个博客来玩玩的想法。</p>
 <p>所以，那就开始吧！</p>
-
       
     </div>
     
     <div class="article-info article-info-index">
+      
       
 	<div class="article-tag tagcloud">
 		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Hexo/">Hexo</a></li></ul>
@@ -265,6 +244,10 @@
 	</div>
 
 
+      
+        <p class="article-more-link">
+          <a  href="/2015/08/18/first-blog/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -297,17 +280,28 @@
     </div>
     
   <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
-  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
 
 
-<script src="/js/mobile.js" type="text/javascript"></script>
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: true,
+		isPost: false,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
 <script src="/js/main.js" type="text/javascript"></script>
 
 
 
 
 
-<! -- mathjax config similar to math.stackexchange -->
 
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
@@ -328,7 +322,6 @@ MathJax.Hub.Queue(function() {
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-
 
 
   </div>
