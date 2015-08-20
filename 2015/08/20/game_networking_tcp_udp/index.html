@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>游戏网络——TCP和UDP | LAxrh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0. 介绍对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。
+你最有可能听到的就是套接字了，也知道它主要有两种类型：TCP 和 UPD。当我们编写一个网络游戏时，我们需要去选择使用哪种类型的套">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏网络——TCP和UDP">
+<meta property="og:url" content="http://yoursite.com/2015/08/20/game_networking_tcp_udp/index.html">
+<meta property="og:site_name" content="LAxrh">
+<meta property="og:description" content="0. 介绍对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。
+你最有可能听到的就是套接字了，也知道它主要有两种类型：TCP 和 UPD。当我们编写一个网络游戏时，我们需要去选择使用哪种类型的套">
+<meta property="og:updated_time" content="2015-08-20T06:04:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏网络——TCP和UDP">
+<meta name="twitter:description" content="0. 介绍对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。
+你最有可能听到的就是套接字了，也知道它主要有两种类型：TCP 和 UPD。当我们编写一个网络游戏时，我们需要去选择使用哪种类型的套">
+  
+    <link rel="alternative" href="/atom.xml" title="LAxrh" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YangHui</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Keep looking, Don&#39;t settle</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YangHui</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YangHui</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Keep looking, Don&#39;t settle</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-game_networking_tcp_udp" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/20/game_networking_tcp_udp/" class="article-date">
+  	<time datetime="2015-08-19T16:00:00.000Z" itemprop="datePublished">2015-08-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      游戏网络——TCP和UDP
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Game/">Game</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/网络/">网络</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+			
+			<div id="toc" class="toc-article">
+			  <strong class="toc-title">目录</strong>
+			  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-_介绍"><span class="toc-text">0. 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_TCP/IP"><span class="toc-text">1. TCP/IP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-_IP"><span class="toc-text">2. IP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-_UDP"><span class="toc-text">3. UDP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-_TCP还是UDP"><span class="toc-text">4. TCP还是UDP</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-_TCP如何真正地工作"><span class="toc-text">5. TCP如何真正地工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-_TCP是如何实现可靠性的"><span class="toc-text">6. TCP是如何实现可靠性的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-_不要在多人游戏中使用TCP"><span class="toc-text">7. 不要在多人游戏中使用TCP</span></a></li></ol>
+			</div>
+			
+
+        <h1 id="0-_介绍">0. 介绍</h1><p>对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。</p>
+<p>你最有可能听到的就是套接字了，也知道它主要有两种类型：TCP 和 UPD。当我们编写一个网络游戏时，我们需要去选择使用哪种类型的套接字。我们是使用TCP，UDP还是混合使用呢？对于网络类型的选择完全取决于你的游戏的类型。不过下面的内容知识针对于多人在线游戏，如Dota2，LOL，WOW等等。</p>
+<a id="more"></a>
+<h1 id="1-_TCP/IP">1. TCP/IP</h1><p>TCP代表了“传输控制协议”(transmission control protocol)，IP代表了“因特网协议” (internet protocol)。它们共同组成了你在网络上做的所有用事情的骨干，从网页浏览到聊天，再到电子邮件，它们全部都是建立在TCP/IP之上的。</p>
+<p>如果你使用过TCP的套接字，你就知道他是致用可靠连接。简单地说就是，你在两台 机器中建立了连接，那么你在这两天计算机之间发送数据，就相当于你在另外一端的机器写文件，从另一端写文件一样。 </p>
+<p>它不仅仅是可靠链接，而且数据时有顺序保证的。意思就是：你发送的数据都会保证按照你写入的顺序到达另外一端。它也是一个数据流，TCP会把你的数据分割成数据包，通过网络为你发送。 </p>
+<h1 id="2-_IP">2. IP</h1><p>它是TCP更低层次的协议。它没有连接的概念，不是数据包从从一台计算机传递到下一台。你可以想象，这个过程就像手写一个便签，从一个人传递到一个拥挤的屋子里，最后，便签会到指定的那个人的手里，只是需要经历很多手的传递。</p>
+<p>这个是不能保证便签是可以传递到指定的人的手中的。发送者只是把便签沿着最好的方式传递出去，永远也不会知道便签是否被接收到，除非另外一个人也回写一个。<br>当然，现实情况要比这个稍微复杂一点，因为没有计算机知道应该沿着怎么样的顺序来传递数据包，以便它可以很快到达目的地。有时候 “IP” 传递了一个包的多份拷贝，这些数据包通过它们不同的路径到达目的地，所以好像是在不同的时候到达的。 </p>
+<h1 id="3-_UDP">3. UDP</h1><p>什么是可以直接发送和接收数据包的呢？而不是将计算机之间的连接看成是写入文件一样。</p>
+<p>我们可以使用UDP来做。UDP代表“用户数据报协议”(user datagram protocol)，它是建立 在IP之上的另外一种协议，和TCP一样，它没有添加了很多的特性和复杂度，它是在IP层没有做多少封装的一层协议。</p>
+<p>使用UDP我们可以发送数据包到目标IP地址和端口，它通过一台又一台的计算机传递，直到到达目标计算机，或者包丢失了。在接收端，我们只要在指定的端口监听。</p>
+<p>UDP是不可靠的协议。在实际的应用中，绝大多数的数据包都会发送成功，但是还是有一少部分的包丢失，有些时候可能一段时间都没有收到包（在你和你的目标计算机中 有很多的计算机）。同时，这个也是无法保证数据包的顺序的。你以3，1，2，5，4发送了5个数据包，在大多数的时候是这个顺序，但是你不能依靠这个。 </p>
+<p>尽管UDP并没有在IP层上做很多的事情，有一点是可以得到保证的。如果你发送了一个数据包，它会要么全部到达目的地，要么都没有到达。所以，如果你发送了256字节的数 据包到另外的计算机上，那台计算机是不可能只收到包前面的100字节，它一定是获得了所有的256字节数据。这个是你值得使用UDP的唯一的保证，其他的由你决定。 </p>
+<h1 id="4-_TCP还是UDP">4. TCP还是UDP</h1><p>先来对比一下2者的特性：</p>
+<p><strong>TCP</strong></p>
+<ul>
+<li>基于连接。</li>
+<li>可靠，有序。</li>
+<li>自动把你的数据分割为数据包。</li>
+<li>确保不会发送数据过快（流量控制）。</li>
+<li>易于使用，读写就像操作文件一样。</li>
+</ul>
+<p><strong>UDP</strong></p>
+<ul>
+<li>没有连接的概念，必须自己写代码处理。</li>
+<li>没有可靠性和包顺序的保证，它们可能无序，重复，或者根本就没有。</li>
+<li>需要手动分割数据到包中，再发送。</li>
+<li>必须确保不能发送数据过快。</li>
+<li>如果有丢包，必须设计一种发送去检测它，如果有必要，重新发送。</li>
+</ul>
+<p>选择看似非常清晰了，TCP所有的都是我们想要的，而且它还容易使用。UDP就是个坑，必须从头开始编写所有的东西。所以很显然我们就该选择TCP就对了？ 错！<br>如果你开发网络游戏使用TCP，那么，该游戏基本可以说已经失败了。</p>
+<h1 id="5-_TCP如何真正地工作">5. TCP如何真正地工作</h1><p>TCP和UDP都是建立在IP层上的，但是，它们是完全不同的。UDP的行为非常类似IP协议。TCP它抽象了很多东西，以至于看上去就像读写文件一样，为你隐藏了包所有的复杂性和不稳定性。</p>
+<p>那么它是如何做到这一点的呢？ </p>
+<p>首先，TCP是一个流协议(stream protocol)，所以仅仅只是向流中写字节，同时TCP确保可以到达另外一端。由于IP是建立在数据包上，TCP是建立在IP之上，因此，TCP必须分割流中的数据到数据包。所以，TCP内部把发送的数据放在了一个队列中，当有足够的数据在队列中等待，它发送一个数据包到其他的机器上。<br>如果你发送很小的数据，这对于多人游戏会有一个问题。会发生TCP不发送数据，直到你缓存了足够多的数据来构造一个合理尺寸（满足发送的条件）的数据包。问题是，你希望客户端玩家的输入能够尽可能快地到达服务端，如果像TCP的处理小数据包一样，它被延迟或者“集中”，客户端的多人游戏的体验就会非常糟糕。</p>
+<p>TCP有一个选项可以设置修复这个行为，叫做TCP_NODELAY。这个选项指示TCP不用等到数据排满才发送，但是只要你写入了数据它就立即发送。很显然，即使你设置了这个选项，TCP对于多人游戏还是有很多问题。 </p>
+<h1 id="6-_TCP是如何实现可靠性的">6. TCP是如何实现可靠性的</h1><p>从根本上来看，TCP还是将数据流分割为了数据包，通过不可靠的IP发送，然后，在 接受包的那一端重构出这个流。 没有比较深入到太多的细节中，因为，TCP发送包，丢包的检测，重发丢失的包到其他的机器上的本质是超级复杂的（参考TCP/IP详解）。重复的包会在另外一端被丢弃，无序的包会重新排序，所以一切都是可靠和有序的。</p>
+<p>问题是：如果我们尝试使用TCP做同步操作，无论什么时候一个包丢失，它必须停止和等待那个数据被重发。是的，即使最近的数据已经到达，新的数据被放到队列里面，你是不能访问它的，必须接受到丢失了的数据包。多久需要重新发送数据包呢？一般至少需要一个往返延迟的时间来重发，还需要一个单程的时间从发送端到接收端。所以如果你的延时为 125ms，你最好等待大约1/5秒来重发数据。在最坏的环境下，你会浪费半秒中的有趣时间 （还有可能重发失败）。</p>
+<h1 id="7-_不要在多人游戏中使用TCP">7. 不要在多人游戏中使用TCP</h1><p>在游戏中使用TCP和在浏览器中，电子邮件和大多数的应用是不一样的，多人游戏对数据包的传递是实时需求的。对于你游戏中的大部分，比如：玩家的输入和人物的位置，它不关心前一秒钟发生了什么，你只关心最新的数据。</p>
+<p>就以Dota2为例。客户端需要实时将用户的输入（如：按键，鼠标输入）发送到服务器，服务器根据最新的数据更新当前的游戏状态，同步所有玩家的地图场景（其他单位是否进入了自己的视野等等），渲染。</p>
+<p>如果游戏使用的是TCP，无论何时丢掉一个数据包，一切都会停止等待数据包的重 发。在游戏客户端游戏对象停止接收更新，所以他们会一直站在那里，在服务端也接收不到客户端的输入，所以玩家不可能再移动或者施放技能。当重发的包被接收到时，你接收到的是陈旧的数据了。同时，其他的数据包都在队列里面等待重发的包，如果这个重发的包接收到了，那么之前等待的包都会一起传递给游戏客户端，因此你必须在一帧里面处理所有的数据包，所有的东西都被挤在一起。</p>
+<p>使用TCP你是无法修正这个行为的，这也不是你想要的，这就是它基础的天性！这就是它让不可靠变为看上去相可靠，有序流的原因。</p>
+<p>然而，我们不想要一个可靠有序的流。我们希望我们的数据从客户端尽可能地快到达服务端，而没有因为丢包数据的重发而必须等待。</p>
+<p>所以，<strong>永远不要在多人游戏中使用TCP来处理网络数据</strong> </p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/19/sdl2_on_mac/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">XCode使用SDL2</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 YangHui
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
