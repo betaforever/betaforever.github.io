@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="LAxrh">
 <meta property="og:description" content="0. 介绍对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。
 你最有可能听到的就是套接字了，也知道它主要有两种类型：TCP 和 UPD。当我们编写一个网络游戏时，我们需要去选择使用哪种类型的套">
-<meta property="og:updated_time" content="2015-08-20T06:04:47.000Z">
+<meta property="og:updated_time" content="2015-08-20T06:14:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="游戏网络——TCP和UDP">
 <meta name="twitter:description" content="0. 介绍对于一个移动端游戏开发人员来说，什么部分最头疼（当然除了需求变更）？应该就是网络部分的东西了，至少对于我来说是这样的，移动端游戏出现bug，很大一部分都是因为网络原因出现的。所以，网络部分需要格外小心，如果这部分出了问题，那么对你的游戏将产出严重的不良后果。
@@ -226,7 +226,7 @@
 <p>如果游戏使用的是TCP，无论何时丢掉一个数据包，一切都会停止等待数据包的重 发。在游戏客户端游戏对象停止接收更新，所以他们会一直站在那里，在服务端也接收不到客户端的输入，所以玩家不可能再移动或者施放技能。当重发的包被接收到时，你接收到的是陈旧的数据了。同时，其他的数据包都在队列里面等待重发的包，如果这个重发的包接收到了，那么之前等待的包都会一起传递给游戏客户端，因此你必须在一帧里面处理所有的数据包，所有的东西都被挤在一起。</p>
 <p>使用TCP你是无法修正这个行为的，这也不是你想要的，这就是它基础的天性！这就是它让不可靠变为看上去相可靠，有序流的原因。</p>
 <p>然而，我们不想要一个可靠有序的流。我们希望我们的数据从客户端尽可能地快到达服务端，而没有因为丢包数据的重发而必须等待。</p>
-<p>所以，<strong>永远不要在多人游戏中使用TCP来处理网络数据</strong> </p>
+<p>所以，<strong>永远不要在多人游戏中使用TCP来处理网络数据。</strong> </p>
 
       
     </div>
@@ -235,6 +235,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2015/08/21/http_upload_file/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Http表单文件上传
+        
+      </div>
+    </a>
   
   
     <a href="/2015/08/19/sdl2_on_mac/" id="article-nav-older" class="article-nav-link-wrap">
