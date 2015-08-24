@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>游戏网络——数据包的接收和发送 | LAxrh</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="0. 介绍前面说了为什么不能选择TCP的网络连接的问题。选择UDP，这样数据包可以直接到达，而不用为了等待丢失包的重发，而所有的包都等待。下面回忆一下大学时候学习的有关网络编程相关的内容。
+1. 套接字熟悉Linux下的网络编程的话，都是知道，它是一套叫做BSD套接字API接口。BSD套接字包含了一系列网络相关的编程函数，如socket, bind, sendto 和 recvfrom等等。不过具">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏网络——数据包的接收和发送">
+<meta property="og:url" content="http://yoursite.com/2015/08/24/game_networking_sending_and_receiving_packets/index.html">
+<meta property="og:site_name" content="LAxrh">
+<meta property="og:description" content="0. 介绍前面说了为什么不能选择TCP的网络连接的问题。选择UDP，这样数据包可以直接到达，而不用为了等待丢失包的重发，而所有的包都等待。下面回忆一下大学时候学习的有关网络编程相关的内容。
+1. 套接字熟悉Linux下的网络编程的话，都是知道，它是一套叫做BSD套接字API接口。BSD套接字包含了一系列网络相关的编程函数，如socket, bind, sendto 和 recvfrom等等。不过具">
+<meta property="og:updated_time" content="2015-08-24T13:42:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏网络——数据包的接收和发送">
+<meta name="twitter:description" content="0. 介绍前面说了为什么不能选择TCP的网络连接的问题。选择UDP，这样数据包可以直接到达，而不用为了等待丢失包的重发，而所有的包都等待。下面回忆一下大学时候学习的有关网络编程相关的内容。
+1. 套接字熟悉Linux下的网络编程的话，都是知道，它是一套叫做BSD套接字API接口。BSD套接字包含了一系列网络相关的编程函数，如socket, bind, sendto 和 recvfrom等等。不过具">
+  
+    <link rel="alternative" href="/atom.xml" title="LAxrh" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="null" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">YangHui</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Keep looking, Don&#39;t settle</p>
+		
+
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				
+				
+				<section class="switch-part switch-part3">
+					<div id="js-friends">
+					
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">奥巴马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">卡卡的美丽传说</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">本泽马的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">吉格斯的博客</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">习大大大不同</a>
+			        
+			          <a target="_blank" class="main-nav-link switch-friends-link" href="http://localhost:4000/">托蒂的博客</a>
+			        
+			        </div>
+				</section>
+				
+
+				
+				
+				<section class="switch-part switch-part4">
+				
+					<div id="js-aboutme">我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">YangHui</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img lazy-src="null" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">YangHui</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Keep looking, Don&#39;t settle</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+      <div class="body-wrap"><article id="post-game_networking_sending_and_receiving_packets" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2015/08/24/game_networking_sending_and_receiving_packets/" class="article-date">
+  	<time datetime="2015-08-23T16:00:00.000Z" itemprop="datePublished">2015-08-24</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      游戏网络——数据包的接收和发送
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Game/">Game</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/网络/">网络</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+			
+			<div id="toc" class="toc-article">
+			  <strong class="toc-title">目录</strong>
+			  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-_介绍"><span class="toc-text">0. 介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_套接字"><span class="toc-text">1. 套接字</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-_平台区分"><span class="toc-text">2. 平台区分</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-_初始化套接字"><span class="toc-text">3. 初始化套接字</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-_创建套接字"><span class="toc-text">4. 创建套接字</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-_设置套接字为无阻塞"><span class="toc-text">5. 设置套接字为无阻塞</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-_发送数据包"><span class="toc-text">5. 发送数据包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-_接收数据包"><span class="toc-text">6. 接收数据包</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-_销毁套接字"><span class="toc-text">7. 销毁套接字</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-_Socket_类"><span class="toc-text">8. Socket 类</span></a></li></ol>
+			</div>
+			
+
+        <h1 id="0-_介绍">0. 介绍</h1><p>前面说了为什么不能选择TCP的网络连接的问题。选择UDP，这样数据包可以直接到达，而不用为了等待丢失包的重发，而所有的包都等待。下面回忆一下大学时候学习的有关网络编程相关的内容。</p>
+<h1 id="1-_套接字">1. 套接字</h1><p>熟悉Linux下的网络编程的话，都是知道，它是一套叫做BSD套接字API接口。BSD套接字包含了一系列网络相关的编程函数，如socket, bind, sendto 和 recvfrom等等。不过具体的平台还是存在一些小的差异，不过大致都大同小异。为了更具有通用性，将平台相关的细节都封装起来，提供统一的接口给客户端程序调用。</p>
+<a id="more"></a>
+<h1 id="2-_平台区分">2. 平台区分</h1><p>首先，自定义平台，代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// &#24179;&#21488;&#26816;&#27979;&#10;#define PLATFORM_WINDOWS  1&#10;#define PLATFORM_MAC      2&#10;#define PLATFORM_UNIX     3&#10; &#10;#if defined(_WIN32)&#10;#define PLATFORM PLATFORM_WINDOWS&#10;#elif defined(__APPLE__)&#10;#define PLATFORM PLATFORM_MAC&#10;#else&#10;#define PLATFORM PLATFORM_UNIX&#10;#endif</span><br></pre></td></tr></table></figure>
+<p>因为不同平台可能函数的声明的头文件名字不一样，所以，需要根据平台来包含特定的头文件，Windows，Mac，Linux平台头文件包含如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if PLATFORM == PLATFORM_WINDOWS&#10; &#10;#include &#60;winsock2.h&#62;&#10; &#10;#elif PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX&#10; &#10;#include &#60;sys/socket.h&#62;&#10;#include &#60;netinet/in.h&#62;&#10;#include &#60;fcntl.h&#62;&#10; &#10;#endif</span><br></pre></td></tr></table></figure>
+<p>可以看到只有Windows平台有些特殊。</p>
+<p>套接字库在类Unix平台上都是内建的标准系统库，编译程序的时候没有必要去链接额外的库。但是在Windows平台下需要指定链接<strong>winsock</strong>库。所以，在头文件下面添加链接库的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if PLATFORM == PLATFORM_WINDOWS&#10;#pragma comment( lib, &#34;wsock32.lib&#34; )&#10;#endif</span><br></pre></td></tr></table></figure>
+<h1 id="3-_初始化套接字">3. 初始化套接字</h1><p>对于大多数的类Unix系统下，都不需要特别的步骤来初始化套接字。Windows平台下需要调用指定的方法（<strong>WSAStartup</strong>）去初始化套接字，使用完之后还需要调用指定的方法（<strong>WSACleanup</strong>）去关闭套接字库。所以，添加两个方法来完成套接字的初始化和关闭工作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inline bool initializeSockets()&#10;&#123;&#10;   #if PLATFORM == PLATFORM_WINDOWS&#10;   WSADATA WsaData;&#10;   return WSAStartup( MAKEWORD(2,2), &#38;WsaData ) == NO_ERROR;&#10;   #else&#10;   return true;&#10;   #endif&#10;&#125;&#10; &#10;inline void shutdownSockets()&#10;&#123;&#10;   #if PLATFORM == PLATFORM_WINDOWS&#10;   WSACleanup();&#10;   #endif&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="4-_创建套接字">4. 创建套接字</h1><p>下面的代码就是创建套接字：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int handle = socket( AF_INET, SOCK_DGRAM, IPPROTO_UDP );&#10; &#10;if ( handle &#60;= 0 )&#10;&#123;&#10;   printf( &#34;failed to create socket\n&#34; );&#10;   return false;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>下一步我们绑定UDP的套接字到一个端口数字(例如. 30000)上。每一个套接字必须绑定一个唯一的端口，因为当一个数据包到达时，端口决定了哪一个套接字来传送它。不要使用小于1024的端口号，那些端口系统保留的。</p>
+<p>一个特殊的情况：如果你不关心你的套接字的要绑定的端口，你可以传一个0作为你的端口号，那么系统将会分配你一个可用的端口。 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sockaddr_in address;&#10;address.sin_family = AF_INET;&#10;address.sin_addr.s_addr = INADDR_ANY;&#10;address.sin_port = htons( (unsigned short) port );&#10; &#10;if ( bind( handle, (const sockaddr*) &#38;address, sizeof(sockaddr_in) ) &#60; 0 )&#10;&#123;&#10;    printf( &#34;failed to bind socket\n&#34; );&#10;    return false;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>现在这个套接字已经准备去发送和接收数据包了。但是，上面的代码中调用<strong>htons</strong> 略显奇怪。这个只是一个转换一个16bit的整数从主机 字节序(host byte order) (小端或者大端) 为网络字节序（大端）的辅助函数。每当你直接设置一个整数到套接字的结构体的时候最好先转换一下。</p>
+<h1 id="5-_设置套接字为无阻塞">5. 设置套接字为无阻塞</h1><p>上一节说到，套接字要是非阻塞的才可以。默认的情况下，套接字是设置为“阻塞模式”的。这个意思就是：如果你尝试使用“recvfrom” 来读取一个数据包，这个函数不会返回，直到有一个可读的数据包。这个是不符合我们的要求的。视频游戏是一个实时的程序，一般是在30或者60帧每秒。它们不可能停在那里等待数据包的到来。<br>解决方法就是在创建套接字的时候将设置你的套接字为“非阻塞模式”。一旦做了这些， “recvfrom”函数当没有接收到包的时候也会立即返回。</p>
+<p>下面就是如何将套接字变成非阻塞的模式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX&#10; &#10;    int nonBlocking = 1;&#10;    if ( fcntl( handle, F_SETFL, O_NONBLOCK, nonBlocking ) == -1 )&#10;    &#123;&#10;        printf( &#34;failed to set non-blocking socket\n&#34; );&#10;        return false;&#10;    &#125;&#10; &#10;#elif PLATFORM == PLATFORM_WINDOWS&#10; &#10;    DWORD nonBlocking = 1;&#10;    if ( ioctlsocket( handle, FIONBIO, &#38;nonBlocking ) != 0 )&#10;    &#123;&#10;        printf( &#34;failed to set non-blocking socket\n&#34; );&#10;        return false;&#10;    &#125;&#10; &#10;#endif</span><br></pre></td></tr></table></figure>
+<p>Windows没有提供<strong>fcntl</strong>函数，所以我们使用<strong>ioctlsocket</strong>函数来代替。</p>
+<h1 id="5-_发送数据包">5. 发送数据包</h1><p>UDP是非连接的协议，所以每一次发送数据包时，都需要你指定发送的目标地址。你可以使用一个UDP的套接字给向不同的地址发送数据，没有一台计算机已连接到你的UDP套接字的另一端。 </p>
+<p>下面是如何给制定的地址发送数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int sent_bytes = sendto( handle, (const char*)packet_data, packet_size,&#10;                         0, (sockaddr*)&#38;address, sizeof(sockaddr_in) );&#10; &#10;if ( sent_bytes != packet_size )&#10;&#123;&#10;    printf( &#34;failed to send packet: return value = %d\n&#34;, sent_bytes );&#10;    return false;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>很重要的一点是：<strong>sendto</strong>函数的返回值只能表明在本地计算机发送数据是否成功。它是无法告诉你目标计算机是否接收到了该数据包！UDP没有一种知道数据包是否到达目标机器的方法。</p>
+<p>在上面的代码中，我们传递了一个<strong>sockaddr_t</strong>的结构体作为目标地址。我们如何创建这样的一个结构体呢？</p>
+<p>如果是我们想发送到地址207.45.186.98:30000。 代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unsigned int a = 207;&#10;unsigned int b = 45;&#10;unsigned int c = 186;&#10;unsigned int d = 98;&#10;unsigned short port = 30000;&#10;&#10;&#10;unsigned int destination_address = ( a &#60;&#60; 24 ) | ( b &#60;&#60; 16 ) | ( c &#60;&#60; 8 ) | d;&#10;unsigned short destination_port = port;&#10; &#10;sockaddr_in address;&#10;address.sin_family = AF_INET;&#10;address.sin_addr.s_addr = htonl( destination_address );&#10;address.sin_port = htons( destination_port );</span><br></pre></td></tr></table></figure>
+<p>先将[0, 255]之间的a, b, c, d 组合为一个单个整数。我们接下来使用整形地址和端口初始化<strong>sockaddr_in</strong>结构体。 为了确保将整形地址转和端口化为网络字节序使用了<strong>htonl</strong>和<strong>htons</strong>。 </p>
+<h1 id="6-_接收数据包">6. 接收数据包</h1><p>一旦一个UDP的套接字绑定到一个端口，任何UDP数据包发送到你的套接字的地址和端 口后，数据包被放在了一个队列中。要接收这些数据只要你循环调用<strong>recvfrom</strong>，直到调用失败，就表示在队列里面没有剩余的数据包了。 因为UDP是无连接的，数据包可能来自于不同的计算机。每一次你接收到一个包，<strong>recvfrom</strong>都会把发送者的IP地址和端口告诉你，所以,你是知道包从哪里发送来的。</p>
+<p>下面是如何循环接收所有来的数据包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">while ( true )&#10;&#123;&#10;    unsigned char packet_data[256];&#10;    unsigned int maximum_packet_size = sizeof( packet_data );&#10; &#10;    #if PLATFORM == PLATFORM_WINDOWS&#10;    typedef int socklen_t;&#10;    #endif&#10; &#10;    sockaddr_in from;&#10;    socklen_t fromLength = sizeof( from );&#10; &#10;    int received_bytes = recvfrom( socket, (char*)packet_data, maximum_packet_size,&#10;                               0, (sockaddr*)&#38;from, &#38;fromLength );&#10; &#10;    if ( received_bytes &#60;= 0 )&#10;        break;&#10; &#10;    unsigned int from_address = ntohl( from.sin_addr.s_addr );&#10;    unsigned int from_port = ntohs( from.sin_port );&#10; &#10;    // &#22788;&#29702;&#25509;&#25910;&#30340;&#21253; &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>队列里面的包比你的缓冲区大的话，会默认把数据包丢弃掉。所以，如果你接收包的缓冲区的大小就像上面的代码一样是256字节，有人发送了一个300字节的数据包给你，那么这个300字节的数据包会被丢弃。你不可能只接收300字节的前面256字节。<br>在你编写你的游戏网络协议的时候，实际中这个一点也不是一个问题，只需要保证你接收数据的缓冲区比你代码中可能发送的最大的数据包还要大就可以了。 </p>
+<h1 id="7-_销毁套接字">7. 销毁套接字</h1><p>在大多数的类Unix平台上，套接字就是一个文件句柄，所以，你使用标准文件<strong>close</strong>函数去清理使用完成的套接字。然而，Windows有一点点不同，我们必须使用closesocket来代替：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#if PLATFORM == PLATFORM_MAC || PLATFORM == PLATFORM_UNIX&#10;close( socket );&#10;#elif PLATFORM == PLATFORM_WINDOWS&#10;closesocket( socket );&#10;#endif</span><br></pre></td></tr></table></figure>
+<h1 id="8-_Socket_类">8. Socket 类</h1><p>上面关于Socket的基本操作如下</p>
+<ul>
+<li>创建一个套接字。</li>
+<li>绑定一个端口。</li>
+<li>设置为“非阻塞模式”。</li>
+<li>发送和接收数据包。</li>
+<li>销毁套接字。<br>但是，这些操作都有一点平台相关性，而且当你每一次想进行套接字操作时都必须记住使用<strong>#ifdef</strong>来做平台的区分，这是相当让人厌烦。最好的解决方法就是把这些平台相关的细节封装起来，给客户代码提供平台无关的接口。为了更好表示网络地址，增加一个“Address”的类。这样好让我们更好容易去指定一个网络地址。避免了每一次发送和接收数据时都必须手处理“sockaddr_in”的结构体。 </li>
+</ul>
+<p>Socket类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Socket&#10;&#123;&#10;public:&#10; &#10;    Socket();&#10;    ~Socket();&#10;    bool Open( unsigned short port );&#10;    void Close();&#10;    bool IsOpen() const;&#10;    bool Send( const Address &#38; destination, const void * data, int size );&#10;    int Receive( Address &#38; sender, void * data, int size );&#10; &#10;private:&#10; &#10;    int handle;&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<p>Address类：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class Address&#10;&#123;&#10;public:&#10; &#10;    Address();&#10;    Address( unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned short port );&#10;    Address( unsigned int address, unsigned short port );&#10;    unsigned int GetAddress() const;&#10;    unsigned char GetA() const;&#10;    unsigned char GetB() const;&#10;    unsigned char GetC() const;&#10;    unsigned char GetD() const;&#10;    unsigned short GetPort() const;&#10;    bool operator == ( const Address &#38; other ) const;&#10;    bool operator != ( const Address &#38; other ) const;&#10; &#10;private:&#10; &#10;    unsigned int address;&#10;    unsigned short port;&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<p>下面是如何使用这些类来发送和接收数据包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// &#21019;&#24314;Socket&#10;const int port = 30000;&#10;Socket socket;&#10;if ( !socket.Open( port ) )&#10;&#123;&#10;    printf( &#34;failed to create socket!\n&#34; );&#10;    return false;&#10;&#125;&#10; &#10;// &#21457;&#36865;&#25968;&#25454;&#21253;&#10;const char data[] = &#34;hello world!&#34;;&#10;socket.Send( Address(127,0,0,1,port), data, sizeof( data ) );&#10; &#10;// &#25509;&#25910;&#25968;&#25454;&#21253;&#10;while ( true )&#10;&#123;&#10;    Address sender;&#10;    unsigned char buffer[256];&#10;    int bytes_read = socket.Receive( sender, buffer, sizeof( buffer ) );&#10;    if ( !bytes_read )&#10;        break;&#10;    // &#22788;&#29702;&#25968;&#25454;&#21253;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这样封装之后，它比直接使用BSD套接字要简单。这些代码在所有的平台上面都是一样的， 因为所有平台相关全部在Socket和Address内部处理了。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2015/08/21/http_upload_file/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Http表单文件上传</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2015 YangHui
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
