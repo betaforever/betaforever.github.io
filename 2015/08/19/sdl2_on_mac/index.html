@@ -5,18 +5,18 @@
   
   <title>XCode使用SDL2 | LAxrh</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.环境操作系统：Mac OS X Yosemite
+  <meta name="description" content="0.环境操作系统：Mac OS X Yosemite
 开发工具：Xcode6
 SDL库版本：2.x
-2.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
+1.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XCode使用SDL2">
 <meta property="og:url" content="http://yoursite.com/2015/08/19/sdl2_on_mac/index.html">
 <meta property="og:site_name" content="LAxrh">
-<meta property="og:description" content="1.环境操作系统：Mac OS X Yosemite
+<meta property="og:description" content="0.环境操作系统：Mac OS X Yosemite
 开发工具：Xcode6
 SDL库版本：2.x
-2.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
+1.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_new_project.png">
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_project_config.png">
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_delete_source.png">
@@ -25,13 +25,13 @@ SDL库版本：2.x
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_add_lib1.png">
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_drag_lib.png">
 <meta property="og:image" content="http://yoursite.com/images/sdl2_on_mac/sdltest_copy_files.png">
-<meta property="og:updated_time" content="2015-08-19T13:21:48.000Z">
+<meta property="og:updated_time" content="2015-08-24T13:45:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="XCode使用SDL2">
-<meta name="twitter:description" content="1.环境操作系统：Mac OS X Yosemite
+<meta name="twitter:description" content="0.环境操作系统：Mac OS X Yosemite
 开发工具：Xcode6
 SDL库版本：2.x
-2.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
+1.Xcode创建工程打开XCode创建一个Cocoa Application工程。如图所示：">
   
     <link rel="alternative" href="/atom.xml" title="LAxrh" type="application/atom+xml">
   
@@ -194,36 +194,36 @@ SDL库版本：2.x
 			
 			<div id="toc" class="toc-article">
 			  <strong class="toc-title">目录</strong>
-			  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-环境"><span class="toc-text">1.环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-Xcode创建工程"><span class="toc-text">2.Xcode创建工程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-删除多余项目"><span class="toc-text">3.删除多余项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-添加文件"><span class="toc-text">4.添加文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1_添加源文件"><span class="toc-text">4.1 添加源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2_添加SDL2库文件"><span class="toc-text">4.2 添加SDL2库文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3_添加测试代码"><span class="toc-text">4.3 添加测试代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-_可能出现的问题"><span class="toc-text">5. 可能出现的问题</span></a></li></ol>
+			  <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-环境"><span class="toc-text">0.环境</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Xcode创建工程"><span class="toc-text">1.Xcode创建工程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-删除多余项目"><span class="toc-text">2.删除多余项目</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-添加文件"><span class="toc-text">3.添加文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1_添加源文件"><span class="toc-text">3.1 添加源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2_添加SDL2库文件"><span class="toc-text">3.2 添加SDL2库文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3_添加测试代码"><span class="toc-text">3.3 添加测试代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-_可能出现的问题"><span class="toc-text">4. 可能出现的问题</span></a></li></ol>
 			</div>
 			
 
-        <h1 id="1-环境">1.环境</h1><p>操作系统：Mac OS X Yosemite</p>
+        <h1 id="0-环境">0.环境</h1><p>操作系统：Mac OS X Yosemite</p>
 <p>开发工具：Xcode6</p>
 <p>SDL库版本：2.x</p>
-<h1 id="2-Xcode创建工程">2.Xcode创建工程</h1><p>打开XCode创建一个Cocoa Application工程。如图所示：</p>
+<h1 id="1-Xcode创建工程">1.Xcode创建工程</h1><p>打开XCode创建一个Cocoa Application工程。如图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_new_project.png" alt="创建工程"></p>
 <a id="more"></a>
 <p>下一步到了工程配置的界面，根据你的需要填写工程的名称等信息。我这里就叫做SDLTest。配置如下如所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_project_config.png" alt="工程配置"></p>
 <p>下面的步骤使用默认的即可，直达工程创建完成。</p>
-<h1 id="3-删除多余项目">3.删除多余项目</h1><p>由于我们并不需要Xcode给我们创建的多余的文件。首先，删除多余的源文件和支持文件。如下图所示：</p>
+<h1 id="2-删除多余项目">2.删除多余项目</h1><p>由于我们并不需要Xcode给我们创建的多余的文件。首先，删除多余的源文件和支持文件。如下图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_delete_source.png" alt="删除多余源文件"></p>
 <p>弹出确认框，选择Move To Trash。彻底删除。这个时候还需要删除测试项目的Targets。打开Targets侧边栏，选中SDLTestTests（名称为你项目名字后面加上Tests，我的项目叫做SDLTest，所以名称为SDLTestTests）删除。如下图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_delete_test_target.png" alt="删除测试工程"></p>
 <p>最后只剩下Info.plist文件，Targets只有SDLTest。</p>
-<h1 id="4-添加文件">4.添加文件</h1><p>添加工程需要的源文件和库文件。</p>
-<h2 id="4-1_添加源文件">4.1 添加源文件</h2><p>删除到其他的东西之后，是时候添加源文件了。添加一个名字为main.cpp的源文件。添加过程如图所示：</p>
+<h1 id="3-添加文件">3.添加文件</h1><p>添加工程需要的源文件和库文件。</p>
+<h2 id="3-1_添加源文件">3.1 添加源文件</h2><p>删除到其他的东西之后，是时候添加源文件了。添加一个名字为main.cpp的源文件。添加过程如图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_add_source.png" alt="添加源文件"></p>
-<h2 id="4-2_添加SDL2库文件">4.2 添加SDL2库文件</h2><p>点击工程文件，打开Targets侧边栏，选择Targets下面的SDLTest Target，在选择Build Phases选项卡，展开Link Binary With Libraries选项。如下图所示：</p>
+<h2 id="3-2_添加SDL2库文件">3.2 添加SDL2库文件</h2><p>点击工程文件，打开Targets侧边栏，选择Targets下面的SDLTest Target，在选择Build Phases选项卡，展开Link Binary With Libraries选项。如下图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_add_lib1.png" alt="添加库文件"></p>
 <p>然后选择SDL2的库文件即可。其实，还有一种更为简单的方法就是，直接把库文件拖到工程中，会出现一个添加文件的配置选项框。如图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_drag_lib.png" alt="添加库文件"></p>
 <p>点击Finish，完成添加。</p>
-<h2 id="4-3_添加测试代码">4.3 添加测试代码</h2><p>打开main.cpp文件添加如下的测试代码。</p>
+<h2 id="3-3_添加测试代码">3.3 添加测试代码</h2><p>打开main.cpp文件添加如下的测试代码。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#60;SDL2/SDL.h&#62;&#10;int main(int argc, const char** argv)&#10;&#123;&#10;    if(SDL_Init(SDL_INIT_EVERYTHING) != 0)&#10;    &#123;&#10;        puts(&#34;SDL_Init error&#34;);&#10;        return -1;&#10;    &#125;&#10;    else&#10;    &#123;&#10;        puts(&#34;SDL_Init success!&#34;);&#10;        return 0;&#10;    &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
 <p>直接编译运行。不出意外会输出<strong>SDL_Init success!</strong>. </p>
-<h1 id="5-_可能出现的问题">5. 可能出现的问题</h1><p>在最后可能出现dylib出现SDL动态库的Image没有找到。那么选择Build Phases选项卡，点击最上面的<strong>+</strong>号，选择<strong>New Copy Files Phases</strong>，添加一个<strong>Copy Files</strong>的分类，再把<strong>Destination</strong>改为<strong>Framesworks</strong>，再使用添加库文件的方式，添加SDL库，如图所示：</p>
+<h1 id="4-_可能出现的问题">4. 可能出现的问题</h1><p>在最后可能出现dylib出现SDL动态库的Image没有找到。那么选择Build Phases选项卡，点击最上面的<strong>+</strong>号，选择<strong>New Copy Files Phases</strong>，添加一个<strong>Copy Files</strong>的分类，再把<strong>Destination</strong>改为<strong>Framesworks</strong>，再使用添加库文件的方式，添加SDL库，如图所示：</p>
 <p><img src="/images/sdl2_on_mac/sdltest_copy_files.png" alt="添加Copy Files"></p>
 
       
